@@ -56,37 +56,28 @@ public class DefaultMethodTest {
 
   @Test
   public void shouldInvokeDefaultMethod() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
       User user = mapper.defaultGetUser(1);
       assertEquals("User1", user.getName());
-    } finally {
-      sqlSession.close();
     }
   }
 
   @Test
   public void shouldInvokeDefaultMethodOfSubclass() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       SubMapper mapper = sqlSession.getMapper(SubMapper.class);
       User user = mapper.defaultGetUser("User1", 1);
       assertEquals("User1", user.getName());
-    } finally {
-      sqlSession.close();
     }
   }
 
   @Test
   public void shouldInvokeDefaultMethodOfPackagePrivateMapper() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       PackageMapper mapper = sqlSession.getMapper(PackageMapper.class);
       User user = mapper.defaultGetUser(1);
       assertEquals("User1", user.getName());
-    } finally {
-      sqlSession.close();
     }
   }
 }
